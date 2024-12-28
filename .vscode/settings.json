@@ -1,0 +1,14 @@
+{
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript", // Enable .ts
+    "typescriptreact" // Enable .tsx
+  ],
+  "stylelint.validate": [
+    "scss",
+    "css"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
