@@ -1,6 +1,16 @@
 {
-  "name": "react-vite-component-template",
-  "version": "0.0.0",
+  "name": "tachyon-ui",
+  "version": "0.0.1",
+  "description": "A TypeScript/React UI component library that imitates the interface of the game Starsector.",
+  "author": {
+    "name": "jn_xyp",
+    "email": "jinan.xyp@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jnxyp/tachyon-ui.git"
+  },
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
@@ -26,8 +36,8 @@
     "**/*.css"
   ],
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.3",
