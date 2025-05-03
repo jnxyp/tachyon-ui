@@ -15,6 +15,16 @@ export interface SSTheme {
 
     background: string
   }
+  fonts: {
+    body: string
+    heading: string
+  }
+}
+
+const defaultFonts = {
+  body: 'Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", STXihei, SimHei, "WenQuanYi Micro Hei", sans-serif;',
+  heading:
+    'Orbitron, REEJI-BigYoung, Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", STXihei, "Microsoft YaHei", SimHei, "WenQuanYi Micro Hei", sans-serif;',
 }
 
 export const darkTheme: SSTheme = {
@@ -33,6 +43,7 @@ export const darkTheme: SSTheme = {
 
     background: darkColors.black,
   },
+  fonts: defaultFonts,
 }
 
 export const lightTheme: SSTheme = {
@@ -51,6 +62,7 @@ export const lightTheme: SSTheme = {
 
     background: lightColors.white,
   },
+  fonts: defaultFonts,
 }
 
 export const themeMap: Record<string, SSTheme> = {
