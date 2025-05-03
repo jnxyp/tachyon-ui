@@ -1,0 +1,75 @@
+[data-theme='dark'] {
+  /* 基础色 */
+  --ss-color-glowblue: #82f8ff;
+  --ss-color-lightblue: #42d9ff;
+  --ss-color-darkblue: #1174ff;
+  --ss-color-shadowblue: #012ce2;
+  --ss-color-black: #000;
+  --ss-color-brown: #b68175;
+  --ss-color-grey: #999;
+  --ss-color-white: #f5f5f5;
+  --ss-color-green: #00cd92;
+  --ss-color-lime: #8fc138;
+  --ss-color-yellow: #ec1;
+  --ss-color-orange: #f81;
+  --ss-color-red: #f00;
+  --ss-color-darkcyan: #16515e;
+  --ss-color-cyan: #508597;
+  --ss-color-lightcyan: #a7dafb;
+  --ss-color-portage: #8597d1;
+  --ss-color-darkred: #6f0404;
+  --ss-color-darkyellow: #a38c08;
+
+  /* 文本色 */
+  --ss-color-regular-text: var(--ss-color-white);
+  --ss-color-header-text: var(--ss-color-lightcyan);
+
+  /* 状态色 */
+  --ss-color-primary: var(--ss-color-darkcyan);
+  --ss-color-secondary: var(--ss-color-cyan);
+  --ss-color-success: var(--ss-color-lime);
+  --ss-color-warning: var(--ss-color-yellow);
+  --ss-color-danger: var(--ss-color-red);
+  --ss-color-info: var(--ss-color-lightblue);
+
+  /* 背景色 */
+  --ss-color-background: var(--ss-color-black);
+}
+
+[data-theme='light'] {
+  /* 基础色 */
+  --ss-color-glowblue: #0091a1;
+  --ss-color-lightblue: #1174ff;
+  --ss-color-darkblue: #012ce2;
+  --ss-color-shadowblue: #000a91;
+  --ss-color-black: #000;
+  --ss-color-brown: #8b5e4d;
+  --ss-color-grey: #444;
+  --ss-color-white: #fff;
+  --ss-color-green: #007f5f;
+  --ss-color-lime: #6fa72d;
+  --ss-color-yellow: #d8b800;
+  --ss-color-orange: #f70;
+  --ss-color-red: #c00;
+  --ss-color-darkcyan: #c8e6e9;
+  --ss-color-cyan: #87bfcf;
+  --ss-color-lightcyan: #d5f0ff;
+  --ss-color-portage: #c1cbec;
+  --ss-color-darkred: #a02929;
+  --ss-color-darkyellow: #8f7b00;
+
+  /* 文本色 */
+  --ss-color-regular-text: var(--ss-color-black);
+  --ss-color-header-text: var(--ss-color-darkblue);
+
+  /* 状态色 */
+  --ss-color-primary: var(--ss-color-darkcyan);
+  --ss-color-secondary: var(--ss-color-cyan);
+  --ss-color-success: var(--ss-color-lime);
+  --ss-color-warning: var(--ss-color-yellow);
+  --ss-color-danger: var(--ss-color-red);
+  --ss-color-info: var(--ss-color-lightblue);
+
+  /* 背景色 */
+  --ss-color-background: var(--ss-color-white);
+}

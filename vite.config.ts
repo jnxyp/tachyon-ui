@@ -11,7 +11,11 @@ import { libInjectCss } from 'vite-plugin-lib-inject-css'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['@emotion'],
+      },
+    }),
     // https://github.com/vitejs/vite/issues/1579#issuecomment-1483756199
     libInjectCss(),
     dts({ exclude: ['**/*.stories.ts', 'src/test', '**/*.test.tsx'] }),
