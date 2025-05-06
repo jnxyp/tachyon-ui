@@ -1,30 +1,104 @@
-import { css, SerializedStyles } from '@emotion/react'
+import { css, SerializedStyles, useTheme } from '@emotion/react'
+import { SSTheme } from '../../themes/theme'
+import {
+  makeBevelShapeDiagonal,
+  makeBevelShapeNormal,
+  makeBevelShapeTab,
+} from '../../styles/corner_shape'
+import { makeTextShadow } from '../../styles/shadow'
 
 interface ComponentProps extends React.ComponentProps<'button'> {
-  primary?: boolean
+  role?: 'regular' | 'success' | 'warning' | 'danger'
   size?: 'small' | 'medium' | 'large'
+  shape?: 'regular' | 'menu' | 'tab'
   label: string
 }
 
 const fontSizeMapping = {
-  small: `1rem`,
-  medium: '1.2rem',
-  large: '1.4rem',
+  small: '1rem',
+  medium: '1.5rem',
+  large: '2rem',
 }
 
-const paddingMapping = {
-  small: '0.4rem 0.6rem',
-  medium: '0.6rem 0.8rem',
-  large: '0.8rem 1rem',
+const shapeFuncMapping = {
+  regular: makeBevelShapeNormal,
+  menu: makeBevelShapeDiagonal,
+  tab: makeBevelShapeTab,
 }
 
-let getButtonStyles = ({ primary, size = 'medium' }: ComponentProps): SerializedStyles => {
-  return css({
-    backgroundColor: primary ? 'rgb(136, 255, 0)' : 'none',
-    borderRadius: '6px',
-    fontSize: fontSizeMapping[size],
-    padding: paddingMapping[size],
-  })
+const getButtonColor = (role: string, theme: SSTheme): { color: string; background: string } => {
+  switch (role) {
+    case 'regular':
+      return {
+        color: theme.colors.regular,
+        background: theme.colors.regularBackground,
+      }
+    case 'success':
+      return {
+        color: theme.colors.success,
+        background: theme.colors.successBackground,
+      }
+    case 'warning':
+      return {
+        color: theme.colors.warning,
+        background: theme.colors.warningBackground,
+      }
+    case 'danger':
+      return {
+        color: theme.colors.danger,
+        background: theme.colors.dangerBackground,
+      }
+    default:
+      return {
+        color: theme.colors.regular,
+        background: theme.colors.regularBackground,
+      }
+  }
+}
+
+const useButtonStyles = ({
+  role = 'regular',
+  size = 'medium',
+  shape = 'regular',
+}: ComponentProps): SerializedStyles => {
+  const theme = useTheme() as SSTheme
+
+  const { color, background } = getButtonColor(role, theme)
+  const bevelSize =
+    size === 'small' ? Math.floor(theme.misc.cornerBevelSize / 2) : theme.misc.cornerBevelSize
+
+  return css(
+    {
+      marginRight: '0.1rem',
+      marginLeft: '0.1rem',
+      paddingLeft: '0.7em',
+      paddingRight: '0.7em',
+
+      outline: 'none',
+      border: 'none',
+
+      transitionDuration: theme.animation.hoverTransationDuriation,
+
+      fontSize: fontSizeMapping[size],
+      fontWeight: theme.fontWeights.bold,
+
+      color,
+      background,
+
+      fontFamily: theme.fonts.heading,
+
+      userSelect: 'none',
+
+      ':hover': {
+        filter: role === 'warning' ? 'brightness(120%)' : 'brightness(150%)',
+      },
+      ':active': {
+        filter: 'brightness(180%)',
+      },
+    },
+    shapeFuncMapping[shape](`${bevelSize}px`),
+    makeTextShadow(theme.colors.textShadow)
+  )
 }
 
 export function MyButton(props: ComponentProps) {
@@ -32,7 +106,7 @@ export function MyButton(props: ComponentProps) {
   return (
     <button
       type='button'
-      css={getButtonStyles(props)}
+      css={useButtonStyles(props)}
       {...props}
     >
       {label}
