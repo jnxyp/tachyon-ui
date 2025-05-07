@@ -79,13 +79,12 @@ const useButtonStyles = ({
 
       transitionDuration: theme.animation.hoverTransationDuriation,
 
-      fontSize: fontSizeMapping[size],
+      fontFamily: theme.fonts.heading,
       fontWeight: theme.fontWeights.bold,
+      fontSize: fontSizeMapping[size],
 
       color,
       background,
-
-      fontFamily: theme.fonts.heading,
 
       userSelect: 'none',
 
@@ -101,7 +100,7 @@ const useButtonStyles = ({
   )
 }
 
-export function MyButton(props: ComponentProps) {
+export function Button(props: ComponentProps) {
   const { label } = props
   return (
     <button

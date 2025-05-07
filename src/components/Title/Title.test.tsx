@@ -1,16 +1,16 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, it } from 'vitest'
-import { MyTitle } from '.'
+import { Title } from './Title'
 
-describe('MyTitle test:', () => {
+describe('Title test:', () => {
   afterEach(cleanup)
 
   it('should render component', () => {
-    render(<MyTitle title='Testing' />)
+    render(<Title title='Testing' />)
   })
 
   it('should render title', () => {
-    render(<MyTitle title='Testing' />)
+    render(<Title title='Testing' />)
     screen.getByText('Testing')
   })
 })
