@@ -1,7 +1,9 @@
 // src/styles/theme.ts
+import { darken, lighten } from 'polished'
 import { SSColors } from './colors'
 
 export interface SSTheme {
+  isLightTheme: boolean
   colors: {
     regularText: string
     headerText: string
@@ -16,7 +18,10 @@ export interface SSTheme {
     warningBackground: string
     danger: string
     dangerBackground: string
+    disabled: string
+    disabledBackground: string
 
+    checkboxButtonBackground: string
     background: string
   }
   fonts: {
@@ -41,6 +46,7 @@ export interface SSTheme {
 }
 
 const baseTheme: SSTheme = {
+  isLightTheme: false,
   colors: {
     regularText: SSColors.white,
     headerText: SSColors.lightcyan,
@@ -55,8 +61,11 @@ const baseTheme: SSTheme = {
     warningBackground: SSColors.darkyellow,
     danger: SSColors.red,
     dangerBackground: SSColors.darkred,
+    disabled: lighten(0.1, SSColors.darkgray),
+    disabledBackground: SSColors.darkgray,
 
-    background: SSColors.black,
+    checkboxButtonBackground: SSColors.blackbackgound,
+    background: SSColors.blackbackgound,
   },
   fonts: {
     body: 'Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", STXihei, SimHei, "WenQuanYi Micro Hei", sans-serif;',
@@ -78,9 +87,27 @@ const baseTheme: SSTheme = {
 
 const lightTheme: SSTheme = {
   ...baseTheme,
+  isLightTheme: true,
   colors: {
     ...baseTheme.colors,
-    regular: SSColors.red,
+    regularText: SSColors.black,
+    headerText: darken(0.03, SSColors.lightcyan),
+
+    textShadow: SSColors.darkgray,
+
+    regular: darken(0.03, SSColors.lightcyan),
+    regularBackground: lighten(0.1, SSColors.darkcyan),
+    success: darken(0.1, SSColors.lime),
+    successBackground: lighten(0.1, SSColors.darklime),
+    warning: darken(0.01, SSColors.yellow),
+    warningBackground: lighten(0.05, SSColors.darkyellow),
+    danger: darken(0.05, SSColors.red),
+    dangerBackground: lighten(0.05, SSColors.darkred),
+    disabled: lighten(0.1, SSColors.gray),
+    disabledBackground: SSColors.gray,
+
+    checkboxButtonBackground: SSColors.white,
+    background: SSColors.white,
   },
 }
 

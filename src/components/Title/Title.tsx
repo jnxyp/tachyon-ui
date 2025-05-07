@@ -5,6 +5,7 @@ import { makeTextShadow } from '../../styles/shadow'
 interface ComponentProps extends React.ComponentProps<'h1'> {
   title: string
   level?: 1 | 2 | 3 | 4 | 5 | 6
+  color?: 'regular' | 'success' | 'warning' | 'danger' | 'default'
 }
 
 const fontSizeMapping = {
@@ -18,7 +19,7 @@ const fontSizeMapping = {
 
 const useTitleStyles = (props: ComponentProps): SerializedStyles => {
   const theme = useTheme() as SSTheme
-  const { level = 1 } = props
+  const { level = 1, color = 'default' } = props
 
   return css(
     {
@@ -29,7 +30,7 @@ const useTitleStyles = (props: ComponentProps): SerializedStyles => {
       fontWeight: theme.fontWeights.bold,
       fontSize: fontSizeMapping[level],
 
-      color: theme.colors.headerText,
+      color: color === 'default' ? theme.colors.headerText : theme.colors[color],
     },
     makeTextShadow(theme.colors.textShadow)
   )

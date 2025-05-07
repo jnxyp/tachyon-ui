@@ -21,25 +21,25 @@ type Story = StoryObj<typeof meta>
 
 export const Regular: Story = {
   args: {
-    role: 'regular',
+    color: 'regular',
   },
 }
 
 export const Success: Story = {
   args: {
-    role: 'success',
+    color: 'success',
   },
 }
 
 export const Warning: Story = {
   args: {
-    role: 'warning',
+    color: 'warning',
   },
 }
 
 export const Danger: Story = {
   args: {
-    role: 'danger',
+    color: 'danger',
   },
 }
 

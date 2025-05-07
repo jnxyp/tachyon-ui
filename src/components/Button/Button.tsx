@@ -6,9 +6,10 @@ import {
   makeBevelShapeTab,
 } from '../../styles/corner_shape'
 import { makeTextShadow } from '../../styles/shadow'
+import { makeActiveFilter, makeHoverFilter } from '../../styles/filters'
 
 interface ComponentProps extends React.ComponentProps<'button'> {
-  role?: 'regular' | 'success' | 'warning' | 'danger'
+  color?: 'regular' | 'success' | 'warning' | 'danger'
   size?: 'small' | 'medium' | 'large'
   shape?: 'regular' | 'menu' | 'tab'
   label: string
@@ -26,44 +27,47 @@ const shapeFuncMapping = {
   tab: makeBevelShapeTab,
 }
 
-const getButtonColor = (role: string, theme: SSTheme): { color: string; background: string } => {
-  switch (role) {
+const getButtonColor = (
+  color: string,
+  theme: SSTheme
+): { textColor: string; background: string } => {
+  switch (color) {
     case 'regular':
       return {
-        color: theme.colors.regular,
+        textColor: theme.colors.regular,
         background: theme.colors.regularBackground,
       }
     case 'success':
       return {
-        color: theme.colors.success,
+        textColor: theme.colors.success,
         background: theme.colors.successBackground,
       }
     case 'warning':
       return {
-        color: theme.colors.warning,
+        textColor: theme.colors.warning,
         background: theme.colors.warningBackground,
       }
     case 'danger':
       return {
-        color: theme.colors.danger,
+        textColor: theme.colors.danger,
         background: theme.colors.dangerBackground,
       }
     default:
       return {
-        color: theme.colors.regular,
+        textColor: theme.colors.regular,
         background: theme.colors.regularBackground,
       }
   }
 }
 
 const useButtonStyles = ({
-  role = 'regular',
+  color = 'regular',
   size = 'medium',
   shape = 'regular',
 }: ComponentProps): SerializedStyles => {
   const theme = useTheme() as SSTheme
 
-  const { color, background } = getButtonColor(role, theme)
+  const { textColor, background } = getButtonColor(color, theme)
   const bevelSize =
     size === 'small' ? Math.floor(theme.misc.cornerBevelSize / 2) : theme.misc.cornerBevelSize
 
@@ -83,17 +87,13 @@ const useButtonStyles = ({
       fontWeight: theme.fontWeights.bold,
       fontSize: fontSizeMapping[size],
 
-      color,
+      color: textColor,
       background,
 
       userSelect: 'none',
 
-      ':hover': {
-        filter: role === 'warning' ? 'brightness(120%)' : 'brightness(150%)',
-      },
-      ':active': {
-        filter: 'brightness(180%)',
-      },
+      ':hover': makeHoverFilter(color, theme.isLightTheme),
+      ':active': makeActiveFilter(theme.isLightTheme),
     },
     shapeFuncMapping[shape](`${bevelSize}px`),
     makeTextShadow(theme.colors.textShadow)
