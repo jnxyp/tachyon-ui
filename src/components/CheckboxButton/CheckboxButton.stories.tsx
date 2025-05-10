@@ -9,7 +9,7 @@ const meta: Meta<typeof CheckboxButton> = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['regular', 'success', 'warning', 'danger', 'default'],
+      options: ['regular', 'success', 'warning', 'danger'],
     },
   },
   parameters: {
@@ -49,7 +49,7 @@ export const Disabled: Story = {
     label: 'Disabled Checkbox',
     checked: true,
     disabled: true,
-    color: 'danger',
+    color: 'regular',
     onChange: () => {},
   },
 }

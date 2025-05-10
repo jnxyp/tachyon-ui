@@ -82,7 +82,7 @@ export class RoleColor {
     if (this._disabledForeground) {
       return this._disabledForeground
     } else {
-      return desaturate(0.5, this.foreground)
+      return desaturate(0.7, this.foreground)
     }
   }
 
@@ -90,7 +90,7 @@ export class RoleColor {
     if (this._disabledBackground) {
       return this._disabledBackground
     } else {
-      return desaturate(0.5, this.background)
+      return desaturate(0.7, this.background)
     }
   }
 }
@@ -175,8 +175,8 @@ const lightTheme: SSTheme = {
     ...baseTheme.roleColors,
     regular: new RoleColor(darken(0.05, SSColors.lightcyan), lighten(0.1, SSColors.darkcyan), true),
     success: new RoleColor(darken(0.1, SSColors.lime), lighten(0.1, SSColors.darklime), true),
-    warning: new RoleColor(darken(0.01, SSColors.yellow), lighten(0.05, SSColors.darkyellow), true),
-    danger: new RoleColor(darken(0.05, SSColors.red), lighten(0.05, SSColors.darkred), true),
+    warning: new RoleColor(darken(0.02, SSColors.yellow), lighten(0.05, SSColors.darkyellow), true),
+    danger: new RoleColor(darken(0.03, SSColors.red), lighten(0.1, SSColors.darkred), true),
   },
   colors: {
     ...baseTheme.colors,

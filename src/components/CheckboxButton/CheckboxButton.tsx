@@ -24,8 +24,12 @@ const useCheckboxButtonStyles = (
     {
       padding: '0.05rem 1.5rem',
 
-      color: roleColor.foreground,
-      background: checked ? roleColor.background : 'transparent',
+      color: disabled ? roleColor.disabledForeground : roleColor.foreground,
+      background: checked
+        ? disabled
+          ? roleColor.disabledBackground
+          : roleColor.background
+        : 'transparent',
 
       userSelect: 'none',
 
