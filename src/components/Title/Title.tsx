@@ -1,11 +1,11 @@
 import { css, SerializedStyles, useTheme } from '@emotion/react'
-import { SSTheme } from '../../themes/theme'
+import { getRoleColor, RoleColorName, SSTheme } from '../../themes/theme'
 import { makeTextShadow } from '../../styles/shadow'
 
 interface ComponentProps extends React.ComponentProps<'h1'> {
   title: string
   level?: 1 | 2 | 3 | 4 | 5 | 6
-  color?: 'regular' | 'success' | 'warning' | 'danger' | 'default'
+  color?: RoleColorName
 }
 
 const fontSizeMapping = {
@@ -19,7 +19,7 @@ const fontSizeMapping = {
 
 const useTitleStyles = (props: ComponentProps): SerializedStyles => {
   const theme = useTheme() as SSTheme
-  const { level = 1, color = 'default' } = props
+  const { level = 1, color = 'regular' } = props
 
   return css(
     {
@@ -30,7 +30,7 @@ const useTitleStyles = (props: ComponentProps): SerializedStyles => {
       fontWeight: theme.fontWeights.bold,
       fontSize: fontSizeMapping[level],
 
-      color: color === 'default' ? theme.colors.headerText : theme.colors[color],
+      color: getRoleColor(theme, color).foreground,
     },
     makeTextShadow(theme.colors.textShadow)
   )

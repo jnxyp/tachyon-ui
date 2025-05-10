@@ -1,5 +1,5 @@
 import { css, SerializedStyles, useTheme } from '@emotion/react'
-import { SSTheme } from '../../themes/theme'
+import { getRoleColor, RoleColorName, SSTheme } from '../../themes/theme'
 import {
   makeBevelShapeDiagonal,
   makeBevelShapeNormal,
@@ -9,7 +9,7 @@ import { makeTextShadow } from '../../styles/shadow'
 import { makeActiveFilter, makeHoverFilter } from '../../styles/filters'
 
 interface ComponentProps extends React.ComponentProps<'button'> {
-  color?: 'regular' | 'success' | 'warning' | 'danger'
+  color?: RoleColorName
   size?: 'small' | 'medium' | 'large'
   shape?: 'regular' | 'menu' | 'tab'
   label: string
@@ -27,39 +27,6 @@ const shapeFuncMapping = {
   tab: makeBevelShapeTab,
 }
 
-const getButtonColor = (
-  color: string,
-  theme: SSTheme
-): { textColor: string; background: string } => {
-  switch (color) {
-    case 'regular':
-      return {
-        textColor: theme.colors.regular,
-        background: theme.colors.regularBackground,
-      }
-    case 'success':
-      return {
-        textColor: theme.colors.success,
-        background: theme.colors.successBackground,
-      }
-    case 'warning':
-      return {
-        textColor: theme.colors.warning,
-        background: theme.colors.warningBackground,
-      }
-    case 'danger':
-      return {
-        textColor: theme.colors.danger,
-        background: theme.colors.dangerBackground,
-      }
-    default:
-      return {
-        textColor: theme.colors.regular,
-        background: theme.colors.regularBackground,
-      }
-  }
-}
-
 const useButtonStyles = ({
   color = 'regular',
   size = 'medium',
@@ -67,7 +34,7 @@ const useButtonStyles = ({
 }: ComponentProps): SerializedStyles => {
   const theme = useTheme() as SSTheme
 
-  const { textColor, background } = getButtonColor(color, theme)
+  const roleColor = getRoleColor(theme, color)
   const bevelSize =
     size === 'small' ? Math.floor(theme.misc.cornerBevelSize / 2) : theme.misc.cornerBevelSize
 
@@ -87,13 +54,19 @@ const useButtonStyles = ({
       fontWeight: theme.fontWeights.bold,
       fontSize: fontSizeMapping[size],
 
-      color: textColor,
-      background,
+      color: roleColor.foreground,
+      backgroundColor: roleColor.background,
 
       userSelect: 'none',
 
-      ':hover': makeHoverFilter(color, theme.isLightTheme),
-      ':active': makeActiveFilter(theme.isLightTheme),
+      ':hover': {
+        color: roleColor.foregroundHover,
+        backgroundColor: roleColor.backgroundHover,
+      },
+      ':active': {
+        color: roleColor.foregroundActive,
+        backgroundColor: roleColor.backgroundActive,
+      },
     },
     shapeFuncMapping[shape](`${bevelSize}px`),
     makeTextShadow(theme.colors.textShadow)

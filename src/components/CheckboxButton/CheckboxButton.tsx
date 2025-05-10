@@ -1,86 +1,64 @@
 import { css, SerializedStyles, useTheme } from '@emotion/react'
-import { SSTheme } from '../../themes/theme'
+import { getRoleColor, RoleColorName, SSTheme } from '../../themes/theme'
 import { makeTextShadow } from '../../styles/shadow'
 import { useMemo } from 'react'
-import { lighten, opacify } from 'polished'
-import { makeHoverFilter } from '../../styles/filters'
+import { lighten, opacify, transparentize } from 'polished'
 
 interface CheckboxButtonProps {
   label: string
   checked: boolean
   onChange: (checked: boolean) => void
   disabled?: boolean
-  color?: 'regular' | 'success' | 'warning' | 'danger' | 'default'
-}
-
-const getCheckBoxButtonColor = (
-  color: string,
-  disabled: boolean,
-  theme: SSTheme
-): { textColor: string; background: string } => {
-  if (disabled) {
-    return {
-      textColor: theme.colors.disabled,
-      background: theme.colors.disabledBackground,
-    }
-  }
-  switch (color) {
-    case 'regular':
-      return {
-        textColor: theme.colors.regular,
-        background: theme.colors.regularBackground,
-      }
-    case 'success':
-      return {
-        textColor: theme.colors.success,
-        background: theme.colors.successBackground,
-      }
-    case 'warning':
-      return {
-        textColor: theme.colors.warning,
-        background: theme.colors.warningBackground,
-      }
-    case 'danger':
-      return {
-        textColor: theme.colors.danger,
-        background: theme.colors.dangerBackground,
-      }
-    default:
-      return {
-        textColor: theme.colors.regular,
-        background: theme.colors.regularBackground,
-      }
-  }
+  color?: RoleColorName
 }
 
 const useCheckboxButtonStyles = (
   checked: boolean,
   disabled: boolean = false,
-  color: string = 'default'
+  color: RoleColorName = 'regular'
 ): SerializedStyles => {
   const theme = useTheme() as SSTheme
-  const { textColor, background } = getCheckBoxButtonColor(color, disabled, theme)
+  const roleColor = getRoleColor(theme, color)
 
   return css(
     {
       padding: '0.05rem 1.5rem',
-      border: `1px solid ${background}`,
 
-      color: textColor,
-      background: checked ? background : theme.colors.checkboxButtonBackground,
+      color: roleColor.foreground,
+      background: checked ? roleColor.background : 'transparent',
 
       userSelect: 'none',
 
       fontFamily: theme.fonts.heading,
       fontWeight: theme.fontWeights.bold,
-
-      boxShadow: `inset 0 0 0 1px ${theme.colors.checkboxButtonBackground}`,
     },
     !disabled && {
-      ':hover': makeHoverFilter(color, theme.isLightTheme),
+      ':hover': css(
+        {
+          color: roleColor.foregroundHover,
+          background: checked
+            ? roleColor.backgroundHover
+            : transparentize(0.3, roleColor.backgroundHover),
+        },
+        makeTextShadow(theme.colors.textShadow)
+      ),
     },
-    makeTextShadow(theme.colors.textShadow)
+    (checked || !theme.isLightTheme) && makeTextShadow(theme.colors.textShadow)
   )
+}
+
+const useOuterBorderStyles = (color: RoleColorName = 'regular'): SerializedStyles => {
+  const theme = useTheme() as SSTheme
+  const roleColor = getRoleColor(theme, color)
+
+  return css({
+    border: `1px solid ${roleColor.background}`,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1px',
+    margin: '0.1rem',
+  })
 }
 
 const useInputStyles = (): SerializedStyles => {
@@ -101,20 +79,22 @@ export function CheckboxButton(props: CheckboxButtonProps) {
   }
 
   return (
-    <label
-      css={useMemo(
-        () => useCheckboxButtonStyles(checked, disabled, color),
-        [checked, disabled, color, theme]
-      )}
-    >
-      <input
-        type='checkbox'
-        css={useInputStyles()}
-        checked={checked}
-        onChange={handleChange}
-        disabled={disabled}
-      />
-      {label}
-    </label>
+    <span css={useOuterBorderStyles(color)}>
+      <label
+        css={useMemo(
+          () => useCheckboxButtonStyles(checked, disabled, color),
+          [checked, disabled, color, theme]
+        )}
+      >
+        <input
+          type='checkbox'
+          css={useInputStyles()}
+          checked={checked}
+          onChange={handleChange}
+          disabled={disabled}
+        />
+        {label}
+      </label>
+    </span>
   )
 }
