@@ -17,7 +17,7 @@ const fontSizeMapping = {
   6: '1.25rem',
 }
 
-const useTitleStyles = (props: ComponentProps): SerializedStyles => {
+const createTitleStyles = (props: ComponentProps): SerializedStyles => {
   const theme = useTheme() as SSTheme
   const { level = 1, color = 'regular' } = props
 
@@ -43,7 +43,7 @@ export function Title(props: ComponentProps) {
 
   return (
     <HeadingTag
-      css={useTitleStyles(props)}
+      css={createTitleStyles(props)}
       {...props}
     >
       {title}

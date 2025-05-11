@@ -1,30 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { CheckboxButton } from './CheckboxButton'
 import React, { useState } from 'react'
+import { Meta, StoryObj } from '@storybook/react'
+import { CheckboxButton } from './CheckboxButton'
 
 const meta: Meta<typeof CheckboxButton> = {
   title: 'Components/CheckboxButton',
   component: CheckboxButton,
   tags: ['autodocs'],
-  argTypes: {
-    color: {
-      control: 'select',
-      options: ['regular', 'success', 'warning', 'danger'],
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        component: '一个带颜色样式的复选框按钮组件，支持受控、禁用、颜色状态等。',
-      },
-    },
-  },
 }
 
 export default meta
 type Story = StoryObj<typeof CheckboxButton>
 
-// Controlled 示例
+// ✅ Controlled usage
 export const Controlled: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(args.checked ?? false)
@@ -38,57 +25,56 @@ export const Controlled: Story = {
   },
   args: {
     label: 'Controlled Checkbox',
-    checked: true,
     color: 'regular',
+    checked: true,
+    disabled: false,
   },
 }
 
-// Disabled 示例
-export const Disabled: Story = {
+// ✅ Uncontrolled usage
+export const Uncontrolled: Story = {
+  render: (args) => (
+    <CheckboxButton
+      {...args}
+      defaultChecked={true}
+    />
+  ),
   args: {
-    label: 'Disabled Checkbox',
-    checked: true,
-    disabled: true,
-    color: 'regular',
-    onChange: () => {},
+    label: 'Uncontrolled Checkbox',
+    color: 'success',
+    disabled: false,
   },
 }
 
-// 多色示例
-export const Colors: Story = {
+// ✅ All combinations preview
+export const AllVariants: Story = {
   render: () => {
-    const [r, setR] = useState(false)
-    const [s, setS] = useState(true)
-    const [w, setW] = useState(false)
-    const [d, setD] = useState(true)
+    const colors = ['regular', 'success', 'warning', 'danger'] as const
+    const states = [
+      { label: 'Enabled', disabled: false, defaultChecked: false },
+      { label: 'Enabled', disabled: false, defaultChecked: true },
+      { label: 'Disabled', disabled: true, defaultChecked: false },
+      { label: 'Disabled', disabled: true, defaultChecked: true },
+    ]
 
     return (
-      <>
-        <CheckboxButton
-          label='Regular'
-          color='regular'
-          checked={r}
-          onChange={setR}
-        />
-        <CheckboxButton
-          label='Success'
-          color='success'
-          checked={s}
-          onChange={setS}
-        />
-        <CheckboxButton
-          label='Warning'
-          color='warning'
-          checked={w}
-          onChange={setW}
-        />
-        <CheckboxButton
-          label='Danger'
-          color='danger'
-          checked={d}
-          onChange={setD}
-        />
-      </>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {states.map((state) => (
+          <div key={state.label}>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {colors.map((color) => (
+                <CheckboxButton
+                  key={`${color}-${state.label}`}
+                  label={`${color}`}
+                  color={color}
+                  defaultChecked={state.defaultChecked}
+                  disabled={state.disabled}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     )
   },
 }

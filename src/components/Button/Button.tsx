@@ -27,7 +27,7 @@ const shapeFuncMapping = {
   tab: makeBevelShapeTab,
 }
 
-const useButtonStyles = ({
+const createButtonStyles = ({
   color = 'regular',
   size = 'medium',
   shape = 'regular',
@@ -78,7 +78,7 @@ export function Button(props: ComponentProps) {
   return (
     <button
       type='button'
-      css={useButtonStyles(props)}
+      css={createButtonStyles(props)}
       {...props}
     >
       {label}

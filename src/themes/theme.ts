@@ -1,5 +1,5 @@
 // src/styles/theme.ts
-import { darken, desaturate, lighten, saturate } from 'polished'
+import { darken, lighten, saturate, setSaturation } from 'polished'
 import { SSColors } from './colors'
 
 export interface RoleColorConfig {
@@ -84,7 +84,7 @@ export class RoleColor {
     if (this._disabledForeground) {
       return this._disabledForeground
     } else {
-      return desaturate(0.7, this.foreground)
+      return setSaturation(0.1, this.foreground)
     }
   }
 
@@ -92,7 +92,7 @@ export class RoleColor {
     if (this._disabledBackground) {
       return this._disabledBackground
     } else {
-      return desaturate(0.7, this.background)
+      return setSaturation(0.1, this.background)
     }
   }
 }
