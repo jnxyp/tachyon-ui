@@ -2,6 +2,18 @@
 import { darken, desaturate, lighten, saturate } from 'polished'
 import { SSColors } from './colors'
 
+export interface RoleColorConfig {
+  foreground: string
+  background: string
+  isLightTheme?: boolean
+  foregroundHover?: string
+  backgroundHover?: string
+  foregroundActive?: string
+  backgroundActive?: string
+  disabledForeground?: string
+  disabledBackground?: string
+}
+
 export class RoleColor {
   foreground: string
   background: string
@@ -16,26 +28,16 @@ export class RoleColor {
   _backgroundActive?: string
   _disabledBackground?: string
 
-  constructor(
-    foreground: string,
-    background: string,
-    isLightTheme: boolean = false,
-    foregroundHover?: string,
-    backgroundHover?: string,
-    foregroundActive?: string,
-    backgroundActive?: string,
-    disabledForeground?: string,
-    disabledBackground?: string
-  ) {
-    this.foreground = foreground
-    this.background = background
-    this.isLightTheme = isLightTheme
-    this._foregroundHover = foregroundHover
-    this._backgroundHover = backgroundHover
-    this._foregroundActive = foregroundActive
-    this._backgroundActive = backgroundActive
-    this._disabledForeground = disabledForeground
-    this._disabledBackground = disabledBackground
+  constructor(config: RoleColorConfig) {
+    this.foreground = config.foreground
+    this.background = config.background
+    this.isLightTheme = config.isLightTheme
+    this._foregroundHover = config.foregroundHover
+    this._backgroundHover = config.backgroundHover
+    this._foregroundActive = config.foregroundActive
+    this._backgroundActive = config.backgroundActive
+    this._disabledForeground = config.disabledForeground
+    this._disabledBackground = config.disabledBackground
   }
 
   get foregroundHover() {
@@ -136,10 +138,10 @@ export interface SSTheme {
 const baseTheme: SSTheme = {
   isLightTheme: false,
   roleColors: {
-    regular: new RoleColor(SSColors.lightcyan, SSColors.darkcyan),
-    success: new RoleColor(SSColors.lime, SSColors.darklime),
-    warning: new RoleColor(SSColors.yellow, SSColors.darkyellow),
-    danger: new RoleColor(SSColors.red, SSColors.darkred),
+    regular: new RoleColor({ foreground: SSColors.lightcyan, background: SSColors.darkcyan }),
+    success: new RoleColor({ foreground: SSColors.lime, background: SSColors.darklime }),
+    warning: new RoleColor({ foreground: SSColors.yellow, background: SSColors.darkyellow }),
+    danger: new RoleColor({ foreground: SSColors.red, background: SSColors.darkred }),
   },
   colors: {
     regularText: SSColors.white,
@@ -173,10 +175,28 @@ const lightTheme: SSTheme = {
   isLightTheme: true,
   roleColors: {
     ...baseTheme.roleColors,
-    regular: new RoleColor(darken(0.05, SSColors.lightcyan), lighten(0.1, SSColors.darkcyan), true),
-    success: new RoleColor(darken(0.1, SSColors.lime), lighten(0.1, SSColors.darklime), true),
-    warning: new RoleColor(darken(0.02, SSColors.yellow), lighten(0.05, SSColors.darkyellow), true),
-    danger: new RoleColor(darken(0.03, SSColors.red), lighten(0.1, SSColors.darkred), true),
+    regular: new RoleColor({
+      foreground: darken(0.05, SSColors.lightcyan),
+      background: lighten(0.1, SSColors.darkcyan),
+      isLightTheme: true,
+    }),
+    success: new RoleColor({
+      foreground: darken(0.1, SSColors.lime),
+      background: lighten(0.1, SSColors.darklime),
+      isLightTheme: true,
+    }),
+    warning: new RoleColor({
+      foreground: darken(0.02, SSColors.yellow),
+      background: lighten(0.04, SSColors.darkyellow),
+      backgroundHover: lighten(0.065, SSColors.darkyellow),
+      backgroundActive: lighten(0.1, SSColors.darkyellow),
+      isLightTheme: true,
+    }),
+    danger: new RoleColor({
+      foreground: darken(0.03, SSColors.red),
+      background: lighten(0.1, SSColors.darkred),
+      isLightTheme: true,
+    }),
   },
   colors: {
     ...baseTheme.colors,

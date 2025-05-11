@@ -44,10 +44,10 @@ const useCheckboxButtonStyles = (
             ? roleColor.backgroundHover
             : transparentize(0.3, roleColor.backgroundHover),
         },
-        makeTextShadow(theme.colors.textShadow)
+        makeTextShadow(theme.colors.textShadow, theme.isLightTheme)
       ),
     },
-    (checked || !theme.isLightTheme) && makeTextShadow(theme.colors.textShadow)
+    (checked || !theme.isLightTheme) && makeTextShadow(theme.colors.textShadow, theme.isLightTheme)
   )
 }
 

@@ -69,7 +69,7 @@ const useButtonStyles = ({
       },
     },
     shapeFuncMapping[shape](`${bevelSize}px`),
-    makeTextShadow(theme.colors.textShadow)
+    makeTextShadow(theme.colors.textShadow, theme.isLightTheme)
   )
 }
 

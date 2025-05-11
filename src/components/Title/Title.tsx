@@ -32,7 +32,7 @@ const useTitleStyles = (props: ComponentProps): SerializedStyles => {
 
       color: getRoleColor(theme, color).foreground,
     },
-    makeTextShadow(theme.colors.textShadow)
+    makeTextShadow(theme.colors.textShadow, theme.isLightTheme)
   )
 }
 
